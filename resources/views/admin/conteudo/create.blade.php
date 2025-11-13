@@ -8,8 +8,8 @@
 
 <div class="card">
     <div class="card-body">
-        <form action="{{ route('admin.conteudos.store')}}" method="POST" id="formStore"></form>        <div class="row align-items-center">
-            @csrf
+        <form action="{{ route('admin.conteudos.store')}}" method="POST" id="formStore">       
+        @csrf
             <div class="col-6">
                 <div class="">
                     <label for="">Nome *</label>
@@ -17,17 +17,17 @@
                 </div>
             </div>
             <div class="col-3">
-                <label for="">Categoria</label>
-                <select name="categoria_pai" class="form-select" id="">
-                    <option value="">Selecione</option>
-                    @foreach ($conteudos as $kCat => $vCat)
-                        <option value="{{ $vCat->id }}">{{ $vCat->nome }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="col-3">
+                    <label form="id_categoria">Categoria *</label>
+                    <select name="categoria_pai" class="form-select" id="" required>
+                        <option value="">Selecione</option>
+                        @foreach($categorias as $kCat => $vCat)
+                            <option value="{{ $vCat->id }}">{{ $vCat->nome }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-3">
                 <label for="">Status</label>
-                <div class="d-flex">
+                <div class="d-flex gap-3">
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="status" required id="radioDefault1" value="ativo">
                         <label class="form-check-label" for="radioDefault1">
@@ -40,6 +40,7 @@
                             inativo
                         </label>
                     </div>
+                </div>
                 </div>
             </div>
         </div>
@@ -81,7 +82,38 @@
                     <i class="fa-solid fa-spinner fa-spin-pulse"></i>
                     </div> Salvar</button>
             </div>
+            </form>
         </div>
     </div>
 </div>
+@endsection
+@section('scripts')
+
+<script>
+    $(document).ready(function () {
+
+        $("#formStore").submit(function (e) {
+            e.preventDefault();
+            $(".loading").removeClass('d-none')
+            $.ajax({
+                type: "POST",
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+                success: function (data) {
+                 if(data.status == 'ok'){
+                    Swal.fire({
+                        title: "Sucesso!",
+                        text: "Conteúdo criado com sucesso!",
+                        icon: "success"
+                    });
+                    $(".loading").addClass('d-none')
+                    $("#formStore")[0].reset()
+                 }
+                }
+            });
+        })
+
+    })
+
+</script>
 @endsection
