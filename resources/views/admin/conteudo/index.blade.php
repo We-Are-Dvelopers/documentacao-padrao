@@ -13,7 +13,9 @@
                             <h5>Listagem</h5>
                         </div>
                         <div class="col text-end">
-                            <a href="{{route('admin.conteudos.create')}}" class="btn btn-primary btn-sm">Adicionar</a>
+                            <a href="{{route('admin.conteudos.create')}}" 
+                            class="btn btn-primary btn-sm">Adicionar</a>
+                            
                         </div>
                     </div>
                     <table class="table">
@@ -28,34 +30,13 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>aaa</td>
+                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td>
                                     <a href=""><i class="fa-solid fa-angle-right"></i></a>
                                 </td>
-                            </tr>
-                            <tr>
-                                <td>aaa</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>aaa</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>aaa</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
                             </tr>
                         </tbody>
                     </table>

@@ -8,43 +8,46 @@
 
 <div class="card">
     <div class="card-body">
- 
-        <div class="row align-items-center">
+        <form action="{{ route('admin.conteudos.store')}}" method="POST" id="formStore">       
+        @csrf
             <div class="col-6">
                 <div class="">
-                    <label for="">Nome</label>
-                    <input type="text" class="form-control">
+                    <label for="">Nome *</label>
+                    <input type="text" class="form-control" name="nome" required>
                 </div>
             </div>
             <div class="col-3">
-                <label for="">Categoria</label>
-                <select name="" class="form-select" id="">
-                    <option value="">Selecione</option>
-                    <option value="">Categoira 1</option>
-                </select>
-            </div>
-            <div class="col-3">
+                    <label form="id_categoria">Categoria *</label>
+                    <select name="categoria_pai" class="form-select" id="" required>
+                        <option value="">Selecione</option>
+                        @foreach($categorias as $kCat => $vCat)
+                            <option value="{{ $vCat->id }}">{{ $vCat->nome }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-3">
                 <label for="">Status</label>
-                <div class="d-flex">
+                <div class="d-flex gap-3">
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="status" id="radioDefault1" value="ativo">
+                        <input class="form-check-input" type="radio" name="status" required id="radioDefault1" value="ativo">
                         <label class="form-check-label" for="radioDefault1">
                             Ativo
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="status" id="radioDefault2" value="inativo">
+                        <input class="form-check-input" type="radio" name="status" required id="radioDefault2" value="inativo">
                         <label class="form-check-label" for="radioDefault2">
                             inativo
                         </label>
                     </div>
+                </div>
                 </div>
             </div>
         </div>
         <div class="row mt-3">
             <div class="col">
             <label for="">Descrição</label>
-            <textarea name="" id="" class="editor"></textarea>
+            <textarea name="descrição" id="" class="editor"></textarea>
             </div>
         </div>
         <div class="row">
@@ -71,12 +74,46 @@
         </div>
         <div class="row mt-3">
             <div class="col">
-                <a href="{{route('admin.conteudos.index')}}" class="btn btn-secondary">Voltar</a>
+                <a href="{{route('admin.conteudos.index')}}"
+                 class="btn btn-secondary">Voltar</a>
             </div>
             <div class="col text-end">
-                <button type="submit" class="btn btn-success">Salvar</button>
+                <button type="submit" class="btn btn-success d-inline-flex gap-3"> <div class="loading d-none">
+                    <i class="fa-solid fa-spinner fa-spin-pulse"></i>
+                    </div> Salvar</button>
             </div>
+            </form>
         </div>
     </div>
 </div>
+@endsection
+@section('scripts')
+
+<script>
+    $(document).ready(function () {
+
+        $("#formStore").submit(function (e) {
+            e.preventDefault();
+            $(".loading").removeClass('d-none')
+            $.ajax({
+                type: "POST",
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+                success: function (data) {
+                 if(data.status == 'ok'){
+                    Swal.fire({
+                        title: "Sucesso!",
+                        text: "Conteúdo criado com sucesso!",
+                        icon: "success"
+                    });
+                    $(".loading").addClass('d-none')
+                    $("#formStore")[0].reset()
+                 }
+                }
+            });
+        })
+
+    })
+
+</script>
 @endsection

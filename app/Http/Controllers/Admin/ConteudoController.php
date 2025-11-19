@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\Conteudos;
+use Illuminate\Support\Str;
+use App\Models\Categorias;
+
+
 
 class ConteudoController extends Controller
 {
@@ -12,6 +17,14 @@ class ConteudoController extends Controller
     }
 
     public function create(){
-        return view(('admin.conteudo.create'));
+        $conteudos = Conteudos::all();
+        return view('admin.conteudo.create', compact('conteudos'));
+        
+    }
+
+    public function store(Request $request)
+    {
+        $categorias = Categorias::all();
+        return view('admin.conteudo.create', compact('id_categoria'));    
     }
 }
