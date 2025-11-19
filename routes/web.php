@@ -20,5 +20,7 @@ Route::prefix('admin')->name('admin.')->controller(AdminController::class)->grou
         Route::get('/', 'index')->name('index');
         Route::get('/create', 'create')->name('create');
         Route::post('/store','store')->name('store');
+        Route::get('/categorias/{id}/edit','edit')->name('edit');
+        Route::put('/categorias/{id}/update','update')->name('update');
     });
 });

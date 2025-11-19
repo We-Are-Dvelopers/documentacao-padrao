@@ -27,4 +27,10 @@ class CategoriasController extends Controller
         $categoria->save();
         return response()->json(['status'=>'ok']);
     }
+
+    public function edit($id){
+        $categoria = Categorias::findOrFail($id);
+        $categorias = Categorias::whereNull('categoria_pai')->get();
+        return view('admin.categorias.edit',compact('categorias'));
+    }
 }

@@ -17,14 +17,13 @@ class ConteudoController extends Controller
     }
 
     public function create(){
-        $conteudos = Conteudos::all();
-        return view('admin.conteudo.create', compact('conteudos'));
+        $categorias = Categorias::where('status', 'ativo')->get();
+        return view('admin.conteudo.create', compact('categorias'));
         
     }
 
     public function store(Request $request)
     {
-        $categorias = Categorias::all();
         return view('admin.conteudo.create', compact('id_categoria'));    
     }
 }
