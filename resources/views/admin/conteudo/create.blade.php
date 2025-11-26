@@ -18,7 +18,7 @@
             </div>
             <div class="col-3">
                     <label form="id_categoria">Categoria *</label>
-                    <select name="categoria_pai" class="form-select" id="" required>
+                    <select name="id_categoria" class="form-select" id="" required>
                         <option value="">Selecione</option>
                         @foreach($categorias as $kCat => $vCat)
                             <option value="{{ $vCat->id }}">{{ $vCat->nome }}</option>
