@@ -28,9 +28,35 @@ class CategoriasController extends Controller
         return response()->json(['status'=>'ok']);
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
         $categoria = Categorias::findOrFail($id);
-        $categorias = Categorias::whereNull('categoria_pai')->get();
-        return view('admin.categorias.edit',compact('categorias'));
+
+        // Para preenchimento do select de categoria pai
+        $categorias = Categorias::whereNull('categoria_pai')
+                        ->where('id', '!=', $id) // impede ser pai de si mesma
+                        ->get();
+
+        return view('admin.categorias.edit', compact('categoria', 'categorias'));
+    }
+    public function update(Request $request, $id)
+    {
+        $data = $request->except(['_token', '_method']);
+
+        $categoria = Categorias::findOrFail($id);
+        $categoria->update($data);
+
+        // Atualiza o slug caso o nome tenha sido alterado
+        $categoria->slug = Str::slug($categoria->nome . '-' . $categoria->id);
+        $categoria->save();
+
+        return response()->json(['status' => 'ok']);
+    }
+    public function destroy($id)
+    {
+        $categoria = Categorias::findOrFail($id);
+        $categoria->delete();
+
+        return response()->json(['status' => 'ok']);
     }
 }

@@ -35,8 +35,8 @@
                     <td>{{$vCat->slug}}</td>
                     <td>{{$vCat->status}}</td>
                     <td class="text-end">
-                        <a href="" class="btn btn-icon-only btn-danger "><i class="fa-solid fa-trash"></i></a>
-                        <a href="" class="btn btn-icon-only btn-light"><i class="fa-solid fa-angle-right"></i></a>
+                        <a href="#" data-id="{{ $vCat->id }}" class="btn btn-icon-only btn-danger "><i class="fa-solid fa-trash"></i></a>
+                        <a href="{{ route('admin.categorias.edit', $vCat->id) }}" class="btn btn-icon-only btn-light"><i class="fa-solid fa-angle-right"></i></a>
                     </td>
                 </tr>
                 @endforeach
@@ -46,4 +46,27 @@
         {!!$categorias->links()!!}
     </div>
 </div>
+@endsection
+
+
+@section('scripts')
+<script>
+ $(document).on('click', '.btn-danger', function() {
+
+        if(!confirm("Tem certeza que deseja excluir esta categoria?")) return;
+
+        let id = $(this).data('id');
+
+        $.ajax({
+            url: '/admin/categorias/' + id + '/destroy',
+            type: 'DELETE',
+            data: {
+                _token: "{{ csrf_token() }}"
+            },
+            success: function() {
+                location.reload();
+            }
+        });
+    });
+</script>
 @endsection
