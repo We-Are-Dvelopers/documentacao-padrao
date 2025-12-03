@@ -20,7 +20,6 @@ class CategoriasController extends Controller
     }
     public function store(Request $request){
         $data = $request->except('_token');
-        
 
         $categoria = Categorias::create($data);
         $categoria->slug = Str::slug($categoria->nome . '-'. $categoria->id);

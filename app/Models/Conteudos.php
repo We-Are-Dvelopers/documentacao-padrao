@@ -15,4 +15,8 @@ class Conteudos extends Model
         'id_categoria',
         'status',
     ];
+    public function categoria()
+    {
+        return $this->belongsTo(Categorias::class, 'id_categoria');
+    }
 }
