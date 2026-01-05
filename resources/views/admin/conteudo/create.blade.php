@@ -55,7 +55,7 @@
             <div class="row mt-3">
                 <div class="col">
                     <label for="">Descrição</label>
-                    <textarea name="descricao" class="editor"></textarea>
+                    <textarea name="descricao" class="summernote"></textarea>
                 </div>
             </div>
 
@@ -177,5 +177,43 @@
         });
 
     });
+
+$(document).ready(function () {
+
+    $('.summernote').summernote({
+        height: 250,
+        lang: 'pt-BR',
+        toolbar: [
+            ['style', ['bold', 'italic', 'underline']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['insert', ['link', 'picture']],
+            ['view', ['codeview']]
+        ]
+    });
+
+    $("#formStore").submit(function (e) {
+        e.preventDefault();
+        $(".loading").removeClass('d-none');
+
+        $.ajax({
+            type: "POST",
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            success: function (data) {
+                if(data.status === 'ok'){
+                    Swal.fire("Sucesso!", "Conteúdo criado com sucesso!", "success");
+                    $(".loading").addClass('d-none');
+                    $("#formStore")[0].reset();
+                    $('.summernote').summernote('reset'); 
+                }
+            },
+            error: function(xhr){
+                $(".loading").addClass('d-none');
+                Swal.fire("Erro", "Falha ao criar conteúdo.", "error");
+            }
+        });
+    });
+
+});
 </script>
 @endsection
