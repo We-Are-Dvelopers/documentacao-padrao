@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"> 
 <head>
-    <title>Panasonic - Documentação</title>
+    <title>We Are Dvelopers - Documentação</title>
     
     <!-- Meta -->
     <meta charset="utf-8">

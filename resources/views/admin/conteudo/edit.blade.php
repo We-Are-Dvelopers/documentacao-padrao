@@ -51,7 +51,7 @@
         {{-- Descrição --}}
         <div class="mb-4">
             <label class="form-label fw-semibold">Descrição</label>
-            <textarea name="descricao" class="form-control" rows="5">{{ $conteudo->descricao }}</textarea>
+            <textarea name="descricao" class="summernote" rows="5">{{ $conteudo->descricao }}</textarea>
         </div>
 
         {{-- Botões --}}
@@ -107,6 +107,45 @@ $(document).ready(function () {
                     text: "Falha ao atualizar o conteúdo.",
                     icon: "error"
                 });
+            }
+        });
+    });
+
+});
+
+$(document).ready(function () {
+
+
+    $('.summernote').summernote({
+        height: 250,
+        lang: 'pt-BR',
+        toolbar: [
+            ['style', ['bold', 'italic', 'underline']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['insert', ['link', 'picture']],
+            ['view', ['codeview']]
+        ]
+    });
+
+    $("#formEdit").submit(function (e) {
+        e.preventDefault();
+        $(".loading").removeClass('d-none');
+
+        $.ajax({
+            type: "POST",
+            url: $(this).attr("action"),
+            data: $(this).serialize(),
+            success: function () {
+                $(".loading").addClass('d-none');
+
+                Swal.fire("Sucesso!", "Conteúdo atualizado com sucesso!", "success")
+                    .then(() => {
+                        window.location.href = "{{ route('admin.conteudos.index') }}";
+                    });
+            },
+            error: function () {
+                $(".loading").addClass('d-none');
+                Swal.fire("Erro!", "Falha ao atualizar o conteúdo.", "error");
             }
         });
     });
