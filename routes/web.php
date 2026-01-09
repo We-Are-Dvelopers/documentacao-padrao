@@ -3,12 +3,12 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CategoriasController;
 use App\Http\Controllers\Admin\ConteudoController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('site.index');
-});
-Route::prefix('admin')->name('admin.')->controller(AdminController::class)->group(function () {
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+
+    Route::prefix('admin')->name('admin.')->controller(AdminController::class)->group(function () {
     Route::get('/', 'index')->name('index');
 
     Route::prefix('/conteudos')->controller(ConteudoController::class)->name('conteudos.')->group(function () {
